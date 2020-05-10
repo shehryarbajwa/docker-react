@@ -1,0 +1,34 @@
+version: '3'
+services:
+    react-app:
+        build:
+            #What files to build from
+            #context what cmd to run
+            context: .
+            dockerfile: Dockerfile.dev
+        ports:
+            #What ports docker to localhost
+            - "3000:3000"
+        volumes:
+            #References to local files
+            - /app/node_modules
+            - .:/app
+
+        stdin_open: true
+    #This will start a second docker container for running tests
+    tests:
+        build:
+            #What files to build from
+            #context of the current directory. dockerfile is in the current directory
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            #References to local files
+            #Map current working directory to /app
+            - /app/node_modules
+            - .:/app
+        command: ["npm", "run", "test"]
+        #For detecting terminal commands
+        #Your own OS
+        stdin_open: true
+
