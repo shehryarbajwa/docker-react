@@ -1,0 +1,11 @@
+sudo: required
+services:
+    - docker
+
+before-install:
+    - docker build -t sbajwa1/docker-react -f Dockerfile.dev .
+
+script:
+    - docker run sbajwa/docker-react npm run test -- --coverage
+
+    
